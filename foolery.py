@@ -8,3 +8,5 @@ from utils import *
 
 # import pyperclip
 # pyperclip.copy("Hello world!")
+
+print("Hello world!")
