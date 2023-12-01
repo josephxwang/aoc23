@@ -13,21 +13,23 @@ import re
 import string
 import sys # eg. sys.setrecursionlimit(3000)
 
+dirs = [(0,-1),(0,1),(-1,0),(1,0)]
+
 letters = string.ascii_lowercase
 digits = string.digits
 
 # Get integers from lines
-def ints(ls):
+def ints(lines):
     ints = []
-    for l in ls:
-        ints.append(list(map(int, re.findall(r"-?\d+", l))))
+    for line in lines:
+        ints.append(list(map(int, re.findall(r"-?\d+", line))))
     return ints
 
 def dfs(graph, curr):
-    s = [curr]
+    stack = [curr]
     visited = set()
-    while s:
-        curr = s.pop()
+    while stack:
+        curr = stack.pop()
         if curr in visited:
             continue
         visited.add(curr)
@@ -36,7 +38,7 @@ def dfs(graph, curr):
         print(curr)
 
         for nbr in graph[curr]:
-            s.append(nbr)
+            stack.append(nbr)
         
 def bfs(graph, curr):
     q = deque([curr])
