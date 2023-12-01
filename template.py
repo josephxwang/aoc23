@@ -1,6 +1,5 @@
 from utils import * # deque, Counter, defaultdict, cache (@cache), math, sys, also ints(ls), letters, digits,
 
-day = path.splitext(path.basename(__file__))[0]
 
 def part1(lines):
     # lines = ints(lines)
@@ -12,13 +11,12 @@ def part2(lines):
     return
 
 
+day = path.splitext(path.basename(__file__))[0]
 ls = [l.strip() for l in open(f"{day}.in")]
-
 p2 = part2(ls)
 if p2:
     print(p2)
     pyperclip.copy(p2)
-
 if not p2:
     p1 = part1(ls)
     print(p1)
