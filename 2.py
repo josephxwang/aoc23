@@ -1,4 +1,4 @@
-from utils import * # deque, Counter, defaultdict, cache (@cache), math, sys, also ints(ls), letters, digits,
+from utils import * # Counter, defaultdict, deque, deepcopy, cache (@cache), math, sys, also words(lines), ints(lines), dirs, letters, digits
 
 
 # 12 red cubes, 13 green cubes, and 14 blue cubes
@@ -12,7 +12,7 @@ def part1(lines):
         for i in range(2, len(l), 2):
             n = int(l[i])
             c = l[i+1][0]
-            if n > {'r':12,'g':13,'b':14}.get(c):
+            if n > {'r':12,'g':13,'b':14}.get(c): # check if valid
                 ok = False
                 break
         if ok:
@@ -53,7 +53,7 @@ def part2(lines):
         for i in range(2, len(l), 2):
             n = int(l[i])
             c = l[i+1][0]
-            m[c] = max(m[c], n)
+            m[c] = max(m[c], n) # track max of rgb
         sum += math.prod(m.values())
     return sum
 
