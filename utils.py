@@ -24,8 +24,8 @@ def words(lines):
 # Get integers from lines
 def ints(lines):
     ints = []
-    for line in lines:
-        ints.append(list(map(int, re.findall(r"-?\d+", line))))
+    for l in lines:
+        ints.append(list(map(int, re.findall(r"-?\d+", l))))
     return ints
 
 def dfs(graph, curr):
