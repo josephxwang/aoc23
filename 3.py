@@ -4,6 +4,7 @@ from utils import * # deque, Counter, defaultdict, cache (@cache), math, sys, al
 def part1(lines):
     # lines = ints(lines)
     # lines = words(lines)
+    # sum = 0
     for l in lines:
         pass
     return
