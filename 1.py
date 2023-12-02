@@ -3,7 +3,6 @@ from utils import * # deque, Counter, defaultdict, cache (@cache), math, sys, al
 day = path.splitext(path.basename(__file__))[0]
 
 # first digit and the last digit
-
 def part1(lines):  
     sum = 0
     for line in lines:

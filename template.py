@@ -3,7 +3,7 @@ from utils import * # deque, Counter, defaultdict, cache (@cache), math, sys, al
 
 def part1(lines):
     # lines = ints(lines)
-    for line in lines:
+    for l in lines:
         pass
     return
 

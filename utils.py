@@ -18,6 +18,9 @@ dirs = [(0,-1),(0,1),(-1,0),(1,0)]
 letters = string.ascii_lowercase
 digits = string.digits
 
+def words(lines):
+    return [l.split() for l in lines]
+
 # Get integers from lines
 def ints(lines):
     ints = []
