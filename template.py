@@ -1,9 +1,11 @@
-from utils import * # deque, Counter, defaultdict, cache (@cache), math, sys, also ints(ls), letters, digits,
+from utils import * # Counter, defaultdict, deque, deepcopy, cache (@cache), math, sys, also gok(grid,r,c), dirs, adjs, letters, digits, symbols
 
 
 def part1(lines):
     # lines = ints(lines)
     # lines = words(lines)
+    # g = grid(lines)
+    
     # sum = 0
     for l in lines:
         pass

@@ -14,12 +14,15 @@ import string
 import sys # eg. sys.setrecursionlimit(3000)
 
 dirs = [(0,-1),(0,1),(-1,0),(1,0)]
+adjs = [
+    (-1,-1),(-1,0),(-1,1),
+    (0,-1),(0,1),
+    (1,-1),(1,0),(1,1)
+]
 
 letters = string.ascii_lowercase
 digits = string.digits
-
-def words(lines):
-    return [l.split() for l in lines]
+symbols = string.punctuation
 
 # Get integers from lines
 def ints(lines):
@@ -27,6 +30,18 @@ def ints(lines):
     for l in lines:
         ints.append(list(map(int, re.findall(r"-?\d+", l))))
     return ints
+
+def words(lines):
+    return [l.split() for l in lines]
+
+def grid(lines):
+    grid = []
+    for l in lines:
+        grid.append(list(l))
+    return grid
+
+def gok(grid, r, c):
+    return 0 <= r < len(grid) and 0 <= c < len(grid[0])
 
 def dfs(graph, curr):
     stack = [curr]
