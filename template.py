@@ -16,7 +16,7 @@ def part2(lines):
 
 
 day = path.splitext(path.basename(__file__))[0]
-ls = [l.strip() for l in open(f"{day}.in")]
+ls = [l.strip() for l in open(f'{day}.in')]
 p2 = part2(ls)
 if p2:
     print(p2)
