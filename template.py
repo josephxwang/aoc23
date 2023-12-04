@@ -6,7 +6,7 @@ def part1(lines):
     # lines = words(lines)
     # g = grid(lines)
     
-    # sum = 0
+    # tot = 0
     for l in lines:
         pass
     return

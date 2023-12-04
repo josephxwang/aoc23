@@ -2,17 +2,62 @@ from utils import * # Counter, defaultdict, deque, deepcopy, cache (@cache), mat
 
 
 def part1(lines):
-    # lines = ints(lines)
-    # lines = words(lines)
-    # g = grid(lines)
-    
-    # sum = 0
+    sum = 0
     for l in lines:
-        pass
-    return
+        x, y = l.split('|')
+        x = x.split()
+        y = y.split()
+        n = len(set(x) & set(y))
+        if n > 0:
+            sum += 2**(n-1)
+    return sum
+
+# def part1(lines):
+#     lines = ints(lines)
+#     sum = 0
+#     for l in lines:
+#         n = 0
+#         w = set()
+#         for i in range(1,11):
+#             w.add(l[i])
+#         for i in range(11,len(l)):
+#             if l[i] in w:
+#                 n += 1
+#         if n > 0:
+#             sum += 2**(n-1)
+#     return sum
 
 def part2(lines):
-    return
+    # return
+    m = defaultdict(int) # number of each card
+    for i, l in enumerate(lines):
+        m[i] += 1
+        x, y = l.split('|')
+        x = x.split()
+        y = y.split()
+        n = len(set(x) & set(y))
+        for j in range(n):
+            m[i+j+1] += m[i]
+    return sum(m.values())
+
+# def part2(lines):
+#     lines = ints(lines)
+#     sum = 0
+#     m = defaultdict(int)
+#     for i, l in enumerate(lines):
+#         m[i+1] += 1
+#         for k in range(m[i+1]):
+#             score = 0
+#             w = set()
+#             for j in range(1,11):
+#                 w.add(l[j])
+#             for j in range(11,len(l)):
+#                 if l[j] in w:
+#                     score += 1
+#             for j in range(1, score+1):
+#                 m[i+j+1] += 1
+#             sum += 1
+#     return sum
 
 
 day = path.splitext(path.basename(__file__))[0]
