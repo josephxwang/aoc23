@@ -1,6 +1,8 @@
 from utils import * # Counter, defaultdict, deque, deepcopy, cache (@cache), math, sys, also gok(grid,r,c), dirs, adjs, letters, digits, symbols
 
 
+# first match makes the card worth one point and each match after the first doubles the point value of that card
+
 def part1(lines):
     sum = 0
     for l in lines:
