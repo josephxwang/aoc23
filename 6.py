@@ -1,4 +1,4 @@
-from utils import * # Counter, defaultdict, deque, deepcopy, cache (@cache), math, sys, also gok(grid,r,c), dirs, adjs, letters, digits, symbols
+from utils import * # Counter, defaultdict, deque, deepcopy, cache (@cache), tqdm, math, sys, also gok(grid,r,c), dirs, adjs, letters, digits, symbols
 
 
 def part1(lines):
