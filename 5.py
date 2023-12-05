@@ -17,9 +17,7 @@ def part1(lines):
                 if 0 <= n-src < length: # within range
                     next.add(n-src+dest)
                     curr.remove(n)
-        
     curr = next | curr
-
     return min(curr) # 388071289
 
 
@@ -29,11 +27,9 @@ def loc_to_seed(n, lines):
     for i in range(2,len(lines)):
         if lines[i] == '':
             is_next = False
-        elif lines[i][0].isalpha():
-            continue
-        else:
+        elif not is_next and lines[i][0].isdigit():
             dest,src,length = map(int,lines[i].split())
-            if not is_next and 0 <= n-dest < length:
+            if 0 <= n-dest < length:
                 n = n-dest+src
                 is_next = True            
     return n
@@ -47,11 +43,11 @@ def part2(lines):
     curr = set()
     
     step = 50000
-    for i in range(0,len(seeds),2): # step 1, find rough answer
-        start = seeds[i]
-        length = seeds[i+1]
-        for j in range(0,length,step): # evenly spaced inputs
-            curr.add(start+j)
+    # for i in tqdm(range(0,len(seeds),2)): # step 1, find rough answer
+    #     start = seeds[i]
+    #     length = seeds[i+1]
+    #     for j in range(0,length,step): # evenly spaced inputs
+    #         curr.add(start+j)
     
     # print(loc_to_seed(84233979,lines)) # step 2, backtrack
         
@@ -60,7 +56,7 @@ def part2(lines):
         curr.add(2605011189-i)
         
     next = set()
-    for i in range(2,len(lines)):
+    for i in tqdm(range(2,len(lines))):
         if lines[i] == '':
             curr = next | curr
             next = set()
@@ -70,9 +66,7 @@ def part2(lines):
                 if 0 <= n-src < length:
                     next.add(n-src+dest)
                     curr.remove(n)
-
     curr = next | curr
-    
     return min(curr) # 84206669
 
 

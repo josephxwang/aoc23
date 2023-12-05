@@ -6,6 +6,7 @@ from functools import cache # @cache decorator
 from heapq import heapify, heappop, heappush # min heap
 
 from os import path
+from tqdm import tqdm
 
 import math # eg. math.gcd(x, y)
 import pyperclip
