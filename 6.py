@@ -5,6 +5,8 @@ from utils import * # Counter, defaultdict, deque, deepcopy, cache (@cache), tqd
 # 135/42
 # I was honestly losing hope. My earliest top performance was rank 644, so I wasn't even sure if my goal was still realistic.
 
+# !! new goal: get on the overall leaderboard
+
 def part1(lines):
     lines = ints(lines)
     ts = lines[0]
