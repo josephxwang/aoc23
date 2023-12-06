@@ -20,8 +20,6 @@ ls = [l.strip() for l in open(f'{day}.in')]
 p2 = part2(ls)
 if p2:
     print(p2)
-    pyperclip.copy(p2)
 if not p2:
     p1 = part1(ls)
     print(p1)
-    pyperclip.copy(p1)

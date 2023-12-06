@@ -1,4 +1,4 @@
-from utils import * # Counter, defaultdict, deque, deepcopy, cache (@cache), tqdm, math, sys, also gok(grid,r,c), dirs, adjs, letters, digits, symbols
+from utils import * # Counter, defaultdict, deque, deepcopy, cache (@cache), math, sys, also gok(grid,r,c), dirs, adjs, letters, digits, symbols
 
 
 # !! I got on the global leaderboard!!!!!
@@ -30,8 +30,6 @@ ls = [l.strip() for l in open(f'{day}.in')]
 p2 = part2(ls)
 if p2:
     print(p2)
-    pyperclip.copy(p2)
 if not p2:
     p1 = part1(ls)
     print(p1)
-    pyperclip.copy(p1)
