@@ -29,11 +29,14 @@ symbols = string.punctuation
 def ints(lines):
     ints = []
     for l in lines:
-        ints.append(list(map(int, re.findall(r"-?\d+", l))))
+        ints.append(list(map(int, re.findall(r'-?\d+',l))))
     return ints
 
 def words(lines):
-    return [l.split() for l in lines]
+    words = []
+    for l in lines:
+        words.append(re.findall(r'-?[a-zA-Z]+',l))
+    return words
 
 def grid(lines):
     grid = []
@@ -42,7 +45,7 @@ def grid(lines):
     return grid
 
 def gok(grid, r, c):
-    return 0 <= r < len(grid) and 0 <= c < len(grid[0])
+    return 0 <=r<len(grid) and 0<=c<len(grid[0])
 
 def dfs(graph, curr):
     stack = [curr]

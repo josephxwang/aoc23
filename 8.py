@@ -2,11 +2,11 @@ from utils import * # Counter, defaultdict, deque, deepcopy, cache (@cache), mat
 
 
 def part1(lines):
-    insts = lines[0]
+    lines = words(lines)
+    insts = lines[0][0]
     lines = lines[2:]
     m = {}
-    for line in lines:
-        node,l,r = line.split()
+    for node,l,r in lines:
         m[node] = (l,r)
     s = 'AAA'
     for i in range(100000):
@@ -20,12 +20,12 @@ def part1(lines):
 
 def part2(lines):
     # return
-    insts = lines[0]
+    lines = words(lines)
+    insts = lines[0][0]
     lines = lines[2:]
     m = {}
     nodes = []
-    for line in lines:
-        node,l,r = line.split()
+    for node,l,r in lines:
         m[node] = (l,r)
         if node.endswith('A'):
             nodes.append(node)
