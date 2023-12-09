@@ -3,48 +3,70 @@ from utils import * # Counter, defaultdict, deque, deepcopy, cache (@cache), mat
 
 # !! hmm maybe my new goal is just top 20 (top 10%) in Smarty Leaderboard 002
 
+def r(curr): # recursive solution is clean
+    if curr.count(0) == len(curr):
+        return 0
+    next = []
+    for i in range(len(curr)-1):
+        next.append(curr[i+1]-curr[i])
+    return curr[-1] + r(next)
+
 def part1(lines):
     lines = ints(lines)
     tot = 0
     for line in lines:
-        seqs = [line]
-        ok = False
-        while not ok:
-            seq = []
-            last = seqs[-1]
-            for i in range(len(last)-1):
-                seq.append(last[i+1]-last[i])
-            seqs.append(seq)
-            if seq.count(0) == len(seq): # messed up this line of code :(, originally, if sum(seq) == 0
-                ok = True
-        
-        seqs = reverse(seqs)
-        for i in range(1,len(seqs)):
-            seqs[i].append(seqs[i][-1]+seqs[i-1][-1])
-        tot += seqs[-1][-1]
+        tot += r(line)
     return tot
 
+# !! original solution
+
+# def part1(lines):
+#     lines = ints(lines)
+#     tot = 0
+#     for line in lines:
+#         seqs = [line]
+#         ok = False
+#         while not ok:
+#             seq = []
+#             last = seqs[-1]
+#             for i in range(len(last)-1):
+#                 seq.append(last[i+1]-last[i])
+#             seqs.append(seq)
+#             if seq.count(0) == len(seq): # messed up this line of code :(, originally, if sum(seq) == 0
+#                 ok = True
+#         seqs = reverse(seqs)
+#         for i in range(1,len(seqs)):
+#             seqs[i].append(seqs[i][-1]+seqs[i-1][-1])
+#         tot += seqs[-1][-1]
+#     return tot
+
 def part2(lines):
-    # return
     lines = ints(lines)
     tot = 0
     for line in lines:
-        seqs = [line]
-        ok = False
-        while not ok:
-            seq = []
-            last = seqs[-1]
-            for i in range(len(last)-1):
-                seq.append(last[i+1]-last[i])
-            seqs.append(seq)
-            if seq.count(0) == len(seq):
-                ok = True
-                
-        seqs = reverse(seqs) # reverse for simplicity
-        for i in range(1,len(seqs)):
-            seqs[i].append(seqs[i][0]-seqs[i-1][-1]) # actually store in back for efficiency
-        tot += seqs[-1][-1]
+        tot += r(reverse(line)) # just reverse the line
     return tot
+
+# def part2(lines):
+#     return
+#     lines = ints(lines)
+#     tot = 0
+#     for line in lines:
+#         seqs = [line]
+#         ok = False
+#         while not ok:
+#             seq = []
+#             last = seqs[-1]
+#             for i in range(len(last)-1):
+#                 seq.append(last[i+1]-last[i])
+#             seqs.append(seq)
+#             if seq.count(0) == len(seq):
+#                 ok = True
+#         seqs = reverse(seqs) # reverse for simplicity
+#         for i in range(1,len(seqs)):
+#             seqs[i].append(seqs[i][0]-seqs[i-1][-1]) # actually store in back for efficiency
+#         tot += seqs[-1][-1]
+#     return tot
 
 day = path.splitext(path.basename(__file__))[0]
 ls = [l.strip() for l in open(f'{day}.in')]
