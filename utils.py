@@ -33,7 +33,7 @@ def reverse(line):
 def ints(lines):
     ints = []
     for l in lines:
-        ints.append(list(map(int, re.findall(r'-?\d+',l))))
+        ints.append(list(map(int, re.findall(r'-?\d+',l)))) # -? optional minus sign for negative numbers
     return ints
 
 def words(lines):
@@ -49,7 +49,7 @@ def grid(lines):
         grid.append(list(l))
     return grid
 
-def gok(grid, r, c):
+def gok(grid, r, c): # grid ok
     return 0<=r<len(grid) and 0<=c<len(grid[0])
 
 def dfs(graph, curr):
@@ -61,7 +61,7 @@ def dfs(graph, curr):
             continue
         visited.add(curr)
                 
-        # Do something
+        # do something
         print(curr)
 
         for nbr in graph[curr]:
@@ -76,7 +76,7 @@ def bfs(graph, curr):
             continue
         visited.add(curr)
                 
-        # Do something
+        # do something
         print(curr)
 
         for nbr in graph[curr]:
@@ -88,7 +88,7 @@ def dijkstra(graph, start):
     parents = [-1]*n
     
     dists[start] = 0
-    q = [(0, start)] # use heap (priority queue), formatted (dist, node)
+    q = [(0, start)] # heap (priority queue), formatted (dist, node)
     while q:
         dist, curr = heappop(q)
         if dist == dists[curr]:
