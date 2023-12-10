@@ -7,7 +7,7 @@ def part1(lines):
     # g = grid(lines)
     
     # tot = 0
-    for line in lines:
+    for l in lines:
         pass
     return
 
