@@ -66,10 +66,10 @@ def part2(lines):
         for r2,c2 in gals[i+1:]:
             tot += abs(r2-r1)+abs(c2-c1)
             for r in range(min(r1,r2)+1,max(r1,r2)):
-                if r in rs:
+                if r in rs: # empty rows
                     tot += (1000000-1)
             for c in range(min(c1,c2)+1,max(c1,c2)):
-                if c in cs:
+                if c in cs: # empty columns
                     tot += (1000000-1)
     return tot
 
