@@ -54,12 +54,12 @@ def gok(grid, r, c): # grid ok
 
 def dfs(graph, curr):
     stack = [curr]
-    visited = set()
+    seen = set()
     while stack:
         curr = stack.pop()
-        if curr in visited:
+        if curr in seen:
             continue
-        visited.add(curr)
+        seen.add(curr)
                 
         # do something
         print(curr)
