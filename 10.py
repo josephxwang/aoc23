@@ -56,6 +56,8 @@ def part1(lines):
 # !! maybe I somehow track the "side" of the pipe
 # thereby tracking inner and outer tiles
 
+# !! maybe convert to <>^v
+
 def part2(lines):
     lines2 = [l.strip() for l in open('10.out')]
     g = grid(lines)
