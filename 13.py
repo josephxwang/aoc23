@@ -34,19 +34,18 @@ def part1(lines):
             if ok:
                 tot += (r+1)*100
                 break
-        if not ok:
-            for c in range(C-1): # vertical line
-                ok = True
-                for dc in range(0,c+1):
-                    for r in range(R):
-                        if c+dc+1 < C and g[r][c-dc] != g[r][c+dc+1]:
-                            ok = False
-                            break
-                    if not ok:
+        for c in range(C-1): # vertical line
+            ok = True
+            for dc in range(0,c+1):
+                for r in range(R):
+                    if c+dc+1 < C and g[r][c-dc] != g[r][c+dc+1]:
+                        ok = False
                         break
-                if ok:
-                    tot += (c+1)
+                if not ok:
                     break
+            if ok:
+                tot += (c+1)
+                break
     return tot
 
 def part2(lines):
@@ -107,20 +106,19 @@ def part2(lines):
                         tot += (r+1)*100
                         ok2 = True
                         break
-                if not ok2:
-                    for c in range(C-1): # vertical line
-                        ok = True
-                        for dc in range(0,c+1):
-                            for r in range(R):
-                                if c+dc+1 < C and g[r][c-dc] != g[r][c+dc+1]:
-                                    ok = False
-                                    break
-                            if not ok:
+                for c in range(C-1): # vertical line
+                    ok = True
+                    for dc in range(0,c+1):
+                        for r in range(R):
+                            if c+dc+1 < C and g[r][c-dc] != g[r][c+dc+1]:
+                                ok = False
                                 break
-                        if ok and (lines[i][0] != 'c' or lines[i][1] != c+1):
-                            tot += (c+1)
-                            ok2 = True
+                        if not ok:
                             break
+                    if ok and (lines[i][0] != 'c' or lines[i][1] != c+1):
+                        tot += (c+1)
+                        ok2 = True
+                        break
                 g[r1][c1] = '.' if g[r1][c1] == '#' else '#' # reset
                 if ok2:
                     break

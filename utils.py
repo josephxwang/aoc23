@@ -53,10 +53,10 @@ def gok(grid, r, c): # grid ok
     return 0<=r<len(grid) and 0<=c<len(grid[0])
 
 def dfs(graph, curr):
-    stack = [curr]
+    s = [curr]
     seen = set()
-    while stack:
-        curr = stack.pop()
+    while s:
+        curr = s.pop()
         if curr in seen:
             continue
         seen.add(curr)
@@ -65,16 +65,16 @@ def dfs(graph, curr):
         print(curr)
 
         for nbr in graph[curr]:
-            stack.append(nbr)
+            s.append(nbr)
         
 def bfs(graph, curr):
     q = deque([curr])
-    visited = set()
+    seen = set()
     while q:
         curr = q.popleft()
-        if curr in visited:
+        if curr in seen:
             continue
-        visited.add(curr)
+        seen.add(curr)
                 
         # do something
         print(curr)
