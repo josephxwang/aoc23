@@ -4,7 +4,7 @@ from utils import * # Counter, defaultdict, deque, deepcopy, cache (@cache), hea
 # !! so tired today
 # I'm learning to just run my code and debug that way instead of trying to pre-empt bugs too much
 
-# !! also I should learn to use zip() and reduce(), might save me a lot of effort
+# !! also I should learn to use zip(), filter(), and reduce(), might save me a lot of effort
 
 def part1(lines):
     # lines = ints(lines)

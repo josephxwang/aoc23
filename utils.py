@@ -1,9 +1,9 @@
-from collections import Counter, defaultdict, deque
+from collections import Counter,defaultdict,deque
 # eg. d = defaultdict(list) then d['a'].append(n), or d = defaultdict(int) then d['a'] += 1 
 
 from copy import deepcopy
-from functools import cache # @cache decorator
-from heapq import heapify, heappop, heappush # min heap
+from functools import cache,reduce # @cache decorator
+from heapq import heapify,heappop,heappush # min heap
 
 from os import path
 # from tqdm import tqdm
