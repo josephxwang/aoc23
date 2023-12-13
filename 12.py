@@ -20,7 +20,7 @@ def smartterr(s,groups,i,j): # smarter recursive :)
     if i >= len(s):
         return 0
     tot = 0
-    if s[i:i+groups[j]].count('#') + s[i:i+groups[j]].count('?') == groups[j] and (i+groups[j] == len(s) or s[i+groups[j]] != '#'): # all #s or ?s
+    if s[i:i+groups[j]].count('#') + s[i:i+groups[j]].count('?') == groups[j] and (i+groups[j] == len(s) or s[i+groups[j]] != '#'): # all #s or ?s, very proud of this line
         tot += smartterr(s,groups,i+groups[j]+1,j+1) # set a group and skip one (also don't actually need to modify s)
     if s[i] != '#':
         tot += smartterr(s,groups,i+1,j) # increment
