@@ -25,6 +25,8 @@ letters = string.ascii_lowercase
 digits = string.digits
 symbols = string.punctuation
 
+# !! add grid rotate and grid flip
+
 # reverse any iterable
 def reverse(line):
     return line[::-1]
