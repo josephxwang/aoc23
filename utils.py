@@ -21,21 +21,15 @@ adjs = [
     (1,-1),(1,0),(1,1)
 ]
 
-letters = string.ascii_lowercase
+alphabet = string.ascii_lowercase
 digits = string.digits
-symbols = string.punctuation
-
-# !! add grid rotate and grid flip
-
-# reverse any iterable
-def reverse(line):
-    return line[::-1]
+punctuation = string.punctuation
 
 # get integers from lines
 def ints(lines):
     ints = []
     for l in lines:
-        ints.append(list(map(int, re.findall(r'-?\d+',l)))) # -? optional minus sign for negative numbers
+        ints.append(list(map(int,re.findall(r'-?\d+',l)))) # -? optional minus sign for negative numbers
     return ints
 
 def words(lines):
@@ -49,12 +43,28 @@ def grid(lines):
     grid = []
     for l in lines:
         grid.append(list(l))
-    return grid
+    return grid,len(grid),len(grid[0])
 
-def gok(grid, r, c): # grid ok
+# reverse any iterable
+def reverse(line):
+    return line[::-1]
+
+def gok(grid,r,c): # grid ok
     return 0<=r<len(grid) and 0<=c<len(grid[0])
 
-def dfs(graph, curr):
+# flip grid along diagonal
+def gflip(grid):
+    return list(map(list,zip(*grid)))
+
+# rotate grid 90 deg clockwise
+def grotcw(grid):
+    return list(map(list,zip(*grid[::-1])))
+
+# rotate grid 90 deg counterclockwise
+def grotccw(grid):
+    return list(map(list,zip(*grid)))[::-1]
+
+def dfs(graph,curr):
     s = [curr]
     seen = set()
     while s:
@@ -69,7 +79,7 @@ def dfs(graph, curr):
         for nbr in graph[curr]:
             s.append(nbr)
         
-def bfs(graph, curr):
+def bfs(graph,curr):
     q = deque([curr])
     seen = set()
     while q:
@@ -77,26 +87,26 @@ def bfs(graph, curr):
         if curr in seen:
             continue
         seen.add(curr)
-                
+
         # do something
         print(curr)
 
         for nbr in graph[curr]:
             q.append(nbr)
 
-def dijkstra(graph, start):
+def dijkstra(graph,start):
     n = len(graph)
-    dists = [float("inf")]*n
+    dists = [float('inf')]*n
     parents = [-1]*n
     
     dists[start] = 0
-    q = [(0, start)] # heap (priority queue), formatted (dist, node)
+    q = [(0,start)] # heap (priority queue), formatted (dist,node)
     while q:
-        dist, curr = heappop(q)
+        dist,curr = heappop(q)
         if dist == dists[curr]:
-            for nbr, weight in graph[curr]: # formatted (node, weight)
-                if weight + dist < dists[nbr]:
-                    dists[nbr] = weight + dist
+            for nbr,weight in graph[curr]: # formatted (node,weight)
+                if weight+dist < dists[nbr]:
+                    dists[nbr] = weight+dist
                     parents[nbr] = curr
-                    heappush(q, (dists[nbr], nbr))
-    return dists, parents
+                    heappush(q,(dists[nbr],nbr))
+    return dists,parents

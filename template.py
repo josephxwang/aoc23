@@ -1,15 +1,19 @@
-from utils import * # Counter, defaultdict, deque, deepcopy, cache (@cache), reduce, heappop/push, math, also dirs, adjs, letters, digits, symbols, also reverse, gok
+from utils import * 
+# Counter, defaultdict, deque, heapify/pop/push (min heap)
+# deepcopy, cache (@cache), reduce, math
+# constants: dirs, adjs, alphabet (lowercase), digits, punctuation
+# functions: reverse, gok, gflip, grotcw, grotccw, dfs, bfs, dijkstra
 
 
 def part1(lines):
     # lines = ints(lines)
     # lines = words(lines)
-    # g = grid(lines)
+    # g,R,C = grid(lines)
     
-    # tot = 0
+    tot = 0
     for i,l in enumerate(lines):
-        pass
-    return
+        
+    return tot
 
 def part2(lines):
     return
