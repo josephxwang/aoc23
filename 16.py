@@ -6,17 +6,76 @@ from utils import *
 
 
 def part1(lines):
-    # lines = ints(lines)
-    # lines = words(lines)
-    # g,R,C = grid(lines)
-    
+    g,R,C = grid(lines)
+    seen = [[[] for _ in range(C)] for _ in range(R)] # track seen as dirs
     tot = 0
-    for i,l in enumerate(lines):
-        
+    s = [(0,0,0,1)] # (position,direction)
+    while s:
+        r,c,dr,dc = s.pop()
+        if not gok(g,r,c):
+            continue
+        if (dr,dc) in seen[r][c]:
+            continue
+        seen[r][c].append((dr,dc))
+        tile = g[r][c]
+        if tile == '/':
+            dr,dc = -dc,-dr
+        elif tile == '\\':
+            dr,dc = dc,dr
+        elif tile == '|':
+            if dc: # going L or R
+                dr,dc = 1,0
+                s.append((r-1,c,-1,0))
+        elif tile == '-':
+            if dr: # going U or D
+                dr,dc = 0,1
+                s.append((r,c-1,0,-1))
+        s.append((r+dr,c+dc,dr,dc))
+    for row in seen:
+        tot += C-row.count([])
     return tot
 
 def part2(lines):
-    return
+    # return
+    g,R,C = grid(lines)
+    res = 0
+    starts = [] # all possible start tiles
+    for r in range(R):
+        starts.append((r,0,0,1))
+        starts.append((r,C-1,0,-1))
+    for c in range(C):
+        starts.append((0,c,1,0))
+        starts.append((R-1,c,-1,0))
+    for start in starts:
+        seen = [[[] for _ in range(C)] for _ in range(R)] # track seen as dirs
+        tot = 0
+        s = [start] # (position,direction)
+        while s:
+            r,c,dr,dc = s.pop()
+            if not gok(g,r,c):
+                continue
+            if (dr,dc) in seen[r][c]:
+                continue
+            seen[r][c].append((dr,dc))
+            tile = g[r][c]
+            if tile == '/':
+                dr,dc = -dc,-dr
+            elif tile == '\\':
+                dr,dc = dc,dr
+            elif tile == '|':
+                if dc: # going L or R
+                    dr,dc = 1,0
+                    s.append((r-1,c,-1,0))
+            elif tile == '-':
+                if dr: # going U or D
+                    dr,dc = 0,1
+                    s.append((r,c-1,0,-1))
+            s.append((r+dr,c+dc,dr,dc))
+        for row in seen:
+            tot += C-row.count([])
+        if tot > res:
+            res = tot
+    return res
 
 
 day = path.splitext(path.basename(__file__))[0]
