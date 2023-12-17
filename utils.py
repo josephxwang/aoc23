@@ -80,7 +80,7 @@ def dfs(graph,curr):
             s.append(nbr)
         
 def bfs(graph,curr):
-    q = deque([curr])
+    q = deque([curr]) # changing to priority queue (if a weighted graph) basically makes dijkstra
     seen = set()
     while q:
         curr = q.popleft()
@@ -110,3 +110,20 @@ def dijkstra(graph,start):
                     parents[nbr] = curr
                     heappush(q,(dists[nbr],nbr))
     return dists,parents
+
+# dijkstra more simply, for a grid
+def dijkstra2(grid):
+    R = len(grid)
+    C = len(grid[0])
+    q = [(0,0,0)] # (dist,r,c), start at top left, no cost to get there
+    seen = set()
+    while q:
+        dist,r,c = heappop(q) # priority queue (heap)
+        if (r,c) == (R-1,C-1): # lower right
+            return dist
+        if (r,c) in seen:
+            continue
+        seen.add((r,c))
+        for dr,dc in dirs:
+            if gok(grid,r+dr,c+dc):
+                heappush(q,(dist+int(grid[r+dr][c+dc]),r+dr,c+dc))
