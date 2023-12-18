@@ -16,8 +16,8 @@ import sys # eg. sys.setrecursionlimit(3000)
 
 # normal is for graph representation (edge list), 2 is for grid
 
-def dfs(graph,curr):
-    s = [curr]
+def dfs(graph,start):
+    s = [start]
     seen = set()
     while s:
         curr = s.pop()
@@ -30,7 +30,7 @@ def dfs(graph,curr):
         for nbr in graph[curr]:
             s.append(nbr)
             
-def dfs2(grid,r,c):
+def dfs2(g,r,c):
     s = [(r,c)]
     seen = set()
     while s:
@@ -42,11 +42,11 @@ def dfs2(grid,r,c):
         # do something
 
         for dr,dc in dirs:
-            if gok(grid,r+dr,c+dc):
+            if gok(g,r+dr,c+dc):
                 s.append((r+dr,c+dc))
         
-def bfs(graph,curr):
-    q = deque([curr]) # changing to priority queue (if a weighted graph) basically makes dijkstra
+def bfs(graph,start):
+    q = deque([start]) # changing to priority queue (if a weighted graph) basically makes dijkstra
     seen = set()
     while q:
         curr = q.popleft()
@@ -59,7 +59,7 @@ def bfs(graph,curr):
         for nbr in graph[curr]:
             q.append(nbr)
 
-def bfs2(grid,r,c):
+def bfs2(g,r,c):
     q = deque([(r,c)])
     seen = set()
     while q:
@@ -71,7 +71,7 @@ def bfs2(grid,r,c):
         # do something
 
         for dr,dc in dirs:
-            if gok(grid,r+dr,c+dc):
+            if gok(g,r+dr,c+dc):
                 q.append((r+dr,c+dc))
 
 def dijkstra(graph,start):
@@ -92,9 +92,9 @@ def dijkstra(graph,start):
     return dists,parents
 
 # dijkstra more simply, for a grid
-def dijkstra2(grid):
-    R = len(grid)
-    C = len(grid[0])
+def dijkstra2(g):
+    R = len(g)
+    C = len(g[0])
     q = [(0,0,0)] # (dist,r,c), start at top left, no cost to get there
     seen = set()
     while q:
@@ -105,8 +105,8 @@ def dijkstra2(grid):
             continue
         seen.add((r,c))
         for dr,dc in dirs:
-            if gok(grid,r+dr,c+dc):
-                heappush(q,(dist+int(grid[r+dr][c+dc]),r+dr,c+dc))
+            if gok(g,r+dr,c+dc):
+                heappush(q,(dist+int(g[r+dr][c+dc]),r+dr,c+dc))
 
 dirs = [(0,-1),(0,1),(-1,0),(1,0)]
 adjs = [
@@ -118,26 +118,6 @@ adjs = [
 alphabet = string.ascii_lowercase
 digits = string.digits
 punctuation = string.punctuation
-
-# get integers from lines
-def ints(lines):
-    ints = []
-    for l in lines:
-        ints.append(list(map(int,re.findall(r'-?\d+',l)))) # -? optional minus sign for negative numbers
-    return ints
-
-def words(lines):
-    words = []
-    for l in lines:
-        words.append(re.findall(r'-?[a-zA-Z]+',l))
-    return words
-
-# parse grid as list of lists
-def grid(lines):
-    grid = []
-    for l in lines:
-        grid.append(list(l))
-    return grid,len(grid),len(grid[0])
 
 # reverse any iterable
 def reverse(line):
@@ -172,3 +152,25 @@ def shoelace(vertices):
 # Pick's theorem, area of simple polygon, given number of points interior to it and on its boundary
 def picks(interiors,boundaries):
     return interiors+boundaries/2-1
+
+# get integers from lines
+def ints(lines):
+    ints = []
+    for l in lines:
+        ints.append(list(map(int,re.findall(r'-?\d+',l)))) # -? optional minus sign for negative numbers
+    return ints
+
+def words(lines):
+    words = []
+    for l in lines:
+        words.append(re.findall(r'-?[a-zA-Z]+',l))
+    return words
+
+# parse grid as list of lists
+def grid(lines,to_int=False):
+    grid = []
+    for l in lines:
+        if to_int:
+            l = map(int,list(l))
+        grid.append(list(l))
+    return grid,len(grid),len(grid[0])

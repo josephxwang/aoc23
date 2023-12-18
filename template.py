@@ -8,7 +8,7 @@ from utils import *
 def part1(lines):
     # lines = ints(lines)
     # lines = words(lines)
-    # g,R,C = grid(lines)
+    # g,R,C = grid(lines,to_int=False)
     
     tot = 0
     for i,l in enumerate(lines):

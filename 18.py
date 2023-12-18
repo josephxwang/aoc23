@@ -47,6 +47,7 @@ def part1(lines):
 # !! nvm I just needed Pick's theorem!
 
 def part2(lines):
+    return
     r,c = 0,0
     vertices = [(r,c)]
     boundaries = 0
