@@ -14,6 +14,100 @@ import re
 import string
 import sys # eg. sys.setrecursionlimit(3000)
 
+# normal is for graph representation (edge list), 2 is for grid
+
+def dfs(graph,curr):
+    s = [curr]
+    seen = set()
+    while s:
+        curr = s.pop()
+        if curr in seen:
+            continue
+        seen.add(curr)
+                
+        # do something
+
+        for nbr in graph[curr]:
+            s.append(nbr)
+            
+def dfs2(grid,r,c):
+    s = [(r,c)]
+    seen = set()
+    while s:
+        r,c = s.pop()
+        if (r,c) in seen:
+            continue
+        seen.add((r,c))
+                
+        # do something
+
+        for dr,dc in dirs:
+            if gok(grid,r+dr,c+dc):
+                s.append((r+dr,c+dc))
+        
+def bfs(graph,curr):
+    q = deque([curr]) # changing to priority queue (if a weighted graph) basically makes dijkstra
+    seen = set()
+    while q:
+        curr = q.popleft()
+        if curr in seen:
+            continue
+        seen.add(curr)
+
+        # do something
+
+        for nbr in graph[curr]:
+            q.append(nbr)
+
+def bfs2(grid,r,c):
+    q = deque([(r,c)])
+    seen = set()
+    while q:
+        r,c = q.popleft()
+        if (r,c) in seen:
+            continue
+        seen.add((r,c))
+                
+        # do something
+
+        for dr,dc in dirs:
+            if gok(grid,r+dr,c+dc):
+                q.append((r+dr,c+dc))
+
+def dijkstra(graph,start):
+    n = len(graph)
+    dists = [float('inf')]*n
+    parents = [-1]*n
+    
+    dists[start] = 0
+    q = [(0,start)] # heap (priority queue), formatted (dist,node)
+    while q:
+        dist,curr = heappop(q)
+        if dist == dists[curr]:
+            for nbr,weight in graph[curr]: # formatted (node,weight)
+                if weight+dist < dists[nbr]:
+                    dists[nbr] = weight+dist
+                    parents[nbr] = curr
+                    heappush(q,(dists[nbr],nbr))
+    return dists,parents
+
+# dijkstra more simply, for a grid
+def dijkstra2(grid):
+    R = len(grid)
+    C = len(grid[0])
+    q = [(0,0,0)] # (dist,r,c), start at top left, no cost to get there
+    seen = set()
+    while q:
+        dist,r,c = heappop(q) # priority queue (heap)
+        if (r,c) == (R-1,C-1): # lower right
+            return dist
+        if (r,c) in seen:
+            continue
+        seen.add((r,c))
+        for dr,dc in dirs:
+            if gok(grid,r+dr,c+dc):
+                heappush(q,(dist+int(grid[r+dr][c+dc]),r+dr,c+dc))
+
 dirs = [(0,-1),(0,1),(-1,0),(1,0)]
 adjs = [
     (-1,-1),(-1,0),(-1,1),
@@ -63,67 +157,18 @@ def grotcw(grid):
 # rotate grid 90 deg counterclockwise
 def grotccw(grid):
     return list(map(list,zip(*grid)))[::-1]
-
-def dfs(graph,curr):
-    s = [curr]
-    seen = set()
-    while s:
-        curr = s.pop()
-        if curr in seen:
-            continue
-        seen.add(curr)
                 
-        # do something
-        print(curr)
+# shoelace theorem, area of simple polygon (within it)
+def shoelace(vertices):
+    n = len(vertices)
+    sum1 = sum2 = 0
+    for i in range(n):
+        x1,y1 = vertices[i]
+        x2,y2 = vertices[(i+1)%n]
+        sum1 += x1*y2
+        sum2 += y1*x2
+    return abs(sum1-sum2)/2
 
-        for nbr in graph[curr]:
-            s.append(nbr)
-        
-def bfs(graph,curr):
-    q = deque([curr]) # changing to priority queue (if a weighted graph) basically makes dijkstra
-    seen = set()
-    while q:
-        curr = q.popleft()
-        if curr in seen:
-            continue
-        seen.add(curr)
-
-        # do something
-        print(curr)
-
-        for nbr in graph[curr]:
-            q.append(nbr)
-
-def dijkstra(graph,start):
-    n = len(graph)
-    dists = [float('inf')]*n
-    parents = [-1]*n
-    
-    dists[start] = 0
-    q = [(0,start)] # heap (priority queue), formatted (dist,node)
-    while q:
-        dist,curr = heappop(q)
-        if dist == dists[curr]:
-            for nbr,weight in graph[curr]: # formatted (node,weight)
-                if weight+dist < dists[nbr]:
-                    dists[nbr] = weight+dist
-                    parents[nbr] = curr
-                    heappush(q,(dists[nbr],nbr))
-    return dists,parents
-
-# dijkstra more simply, for a grid
-def dijkstra2(grid):
-    R = len(grid)
-    C = len(grid[0])
-    q = [(0,0,0)] # (dist,r,c), start at top left, no cost to get there
-    seen = set()
-    while q:
-        dist,r,c = heappop(q) # priority queue (heap)
-        if (r,c) == (R-1,C-1): # lower right
-            return dist
-        if (r,c) in seen:
-            continue
-        seen.add((r,c))
-        for dr,dc in dirs:
-            if gok(grid,r+dr,c+dc):
-                heappush(q,(dist+int(grid[r+dr][c+dc]),r+dr,c+dc))
+# Pick's theorem, area of simple polygon, given number of points interior to it and on its boundary
+def picks(interiors,boundaries):
+    return interiors+boundaries/2-1
