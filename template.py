@@ -12,6 +12,7 @@ def part1(lines):
     
     tot = 0
     for i,l in enumerate(lines):
+    # for l in lines:
         
     return tot
 
