@@ -12,6 +12,7 @@ def part1(lines):
     # g,R,C = grid(lines,to_int=False)
     
     tot = 0
+    # prod = 1
     for i,l in enumerate(lines):
     # for l in lines:
         
