@@ -47,7 +47,7 @@ def part1(lines):
 # !! nvm I just needed Pick's theorem!
 
 def part2(lines):
-    return
+    # return
     r,c = 0,0
     vertices = [(r,c)]
     boundaries = 0
@@ -66,9 +66,9 @@ def part2(lines):
         c += dc*n
         vertices.append((r,c))
         boundaries += n
-    interiors = shoelace(vertices)
-    area = picks(interiors,boundaries) # Pick's theorem
-    return area # off by 2 for some reason
+    area = shoelace(vertices)
+    tot = picks(area,boundaries) # Pick's theorem
+    return tot # off by 2 for some reason
 
 
 day = path.splitext(path.basename(__file__))[0]

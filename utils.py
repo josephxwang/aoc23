@@ -149,11 +149,11 @@ def shoelace(vertices):
         x2,y2 = vertices[(i+1)%n]
         sum1 += x1*y2
         sum2 += y1*x2
-    return abs(sum1-sum2)/2
+    return abs(sum1-sum2)//2
 
-# Pick's theorem, area of simple polygon, given number of points interior to it and on its boundary
-def picks(interiors,boundaries):
-    return interiors+boundaries/2-1
+# Pick's theorem, interior and boundary points of a simple polygon given its area and boundary
+def picks(area,boundaries):
+    return area+boundaries//2+1
 
 # get integers from lines
 def ints(lines):
