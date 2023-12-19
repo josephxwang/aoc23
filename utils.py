@@ -1,18 +1,15 @@
-from collections import Counter,defaultdict,deque
-# eg. d = defaultdict(list) then d['a'].append(n), or d = defaultdict(int) then d['a'] += 1 
-
+from collections import Counter,defaultdict,deque # eg. d = defaultdict(list) then d['a'].append(n), or d = defaultdict(int) then d['a'] += 1 
 from copy import deepcopy
 from functools import cache,reduce # @cache decorator
-from heapq import heapify,heappop,heappush # min heap
-
+from heapq import heapify,heappop,heappush # min heap (priority queue)
 from os import path
 # from tqdm import tqdm
-
 import math # eg. math.gcd(x, y)
 # import pyperclip
 import re
 import string
 import sys # eg. sys.setrecursionlimit(3000)
+
 
 # normal is for graph representation (edge list), 2 is for grid
 
@@ -36,8 +33,10 @@ def dfs2(g,r,c):
     while s:
         r,c = s.pop()
         if (r,c) in seen:
+        # if g[r][c] == '':
             continue
         seen.add((r,c))
+        # g[r][c] = ''
                 
         # do something
 
@@ -46,7 +45,7 @@ def dfs2(g,r,c):
                 s.append((r+dr,c+dc))
         
 def bfs(graph,start):
-    q = deque([start]) # changing to priority queue (if a weighted graph) basically makes dijkstra
+    q = deque([start]) # changing to priority queue (if weighted graph) basically makes dijkstra
     seen = set()
     while q:
         curr = q.popleft()
@@ -65,8 +64,10 @@ def bfs2(g,r,c):
     while q:
         r,c = q.popleft()
         if (r,c) in seen:
+        # if g[r][c] == '':
             continue
         seen.add((r,c))
+        # g[r][c] = ''
                 
         # do something
 
@@ -74,7 +75,7 @@ def bfs2(g,r,c):
             if gok(g,r+dr,c+dc):
                 q.append((r+dr,c+dc))
 
-def dijkstra(graph,start):
+def dijkstra(graph,start): # classic
     n = len(graph)
     dists = [float('inf')]*n
     parents = [-1]*n
@@ -106,7 +107,8 @@ def dijkstra2(g):
         seen.add((r,c))
         for dr,dc in dirs:
             if gok(g,r+dr,c+dc):
-                heappush(q,(dist+int(g[r+dr][c+dc]),r+dr,c+dc))
+                heappush(q,(dist+g[r+dr][c+dc],r+dr,c+dc))
+
 
 dirs = [(0,-1),(0,1),(-1,0),(1,0)]
 adjs = [
@@ -137,7 +139,7 @@ def grotcw(grid):
 # rotate grid 90 deg counterclockwise
 def grotccw(grid):
     return list(map(list,zip(*grid)))[::-1]
-                
+
 # shoelace theorem, area of simple polygon (within it)
 def shoelace(vertices):
     n = len(vertices)
@@ -163,7 +165,7 @@ def ints(lines):
 def words(lines):
     words = []
     for l in lines:
-        words.append(re.findall(r'-?[a-zA-Z]+',l))
+        words.append(re.findall(r'[a-zA-Z]+',l))
     return words
 
 # parse grid as list of lists
