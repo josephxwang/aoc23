@@ -1,5 +1,6 @@
 *.in
 *.out
+*.png
 foolery.*
 aoc19/
 aoc22/
