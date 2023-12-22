@@ -8,7 +8,7 @@ from utils import *
 def part1(lines):
     d = 500
     g = [[[-1]*d for _ in range(d)] for _ in range(d)]
-    bricks = defaultdict(list)
+    bricks = defaultdict(set)
     for i,l in enumerate(lines):
         l = l.split('~')
         x1,y1,z1 = map(int,l[0].split(','))
@@ -17,7 +17,7 @@ def part1(lines):
             for y in range(y1,y2+1):
                 for z in range(z1,z2+1):
                     g[x][y][z] = i
-                    bricks[i].append((x,y,z))
+                    bricks[i].add((x,y,z))
     moved = True
     while moved:
         moved = False
@@ -29,7 +29,7 @@ def part1(lines):
             if ok:
                 for x,y,z in deepcopy(bricks[i]):
                     bricks[i].remove((x,y,z))
-                    bricks[i].append((x,y,z-1))
+                    bricks[i].add((x,y,z-1))
                     g[x][y][z-1] = g[x][y][z]
                     g[x][y][z] = -1
                 moved = True
@@ -55,9 +55,10 @@ def f(i,childs,parents):
     return tot
 
 def part2(lines):
+    # return
     d = 500
     g = [[[-1]*d for _ in range(d)] for _ in range(d)]
-    bricks = defaultdict(list)
+    bricks = defaultdict(set)
     for i,l in enumerate(lines):
         l = l.split('~')
         x1,y1,z1 = map(int,l[0].split(','))
@@ -66,7 +67,7 @@ def part2(lines):
             for y in range(y1,y2+1):
                 for z in range(z1,z2+1):
                     g[x][y][z] = i
-                    bricks[i].append((x,y,z))
+                    bricks[i].add((x,y,z))
     moved = True
     while moved:
         moved = False
@@ -78,7 +79,7 @@ def part2(lines):
             if ok:
                 for x,y,z in deepcopy(bricks[i]):
                     bricks[i].remove((x,y,z))
-                    bricks[i].append((x,y,z-1))
+                    bricks[i].add((x,y,z-1))
                     g[x][y][z-1] = g[x][y][z]
                     g[x][y][z] = -1
                 moved = True
