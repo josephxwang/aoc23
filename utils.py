@@ -11,6 +11,8 @@ import string
 import sys # eg. sys.setrecursionlimit(3000)
 
 
+# !! add topological sort
+
 # normal is for graph representation (edge list), 2 is for grid
 
 def dfs(graph,start):
