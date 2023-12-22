@@ -1,3 +1,4 @@
+from turtle import done
 from utils import * 
 # Counter, defaultdict, deque, heapify/pop/push (min heap)
 # deepcopy, cache (@cache), reduce, math
@@ -5,10 +6,29 @@ from utils import *
 # functions: reverse, gok, gflip, grotcw, grotccw, dfs, bfs, dijkstra
 
 
-
-
 def part1(lines):
     g,R,C = grid(lines,to_int=False)
+    # curr = set([(0,0)]) # even parity
+    # even = set()
+    # odd = set()
+    # i = 0
+    # while curr: # fill every other, in layers
+    #     next = set()
+    #     for r,c in curr:
+    #         if (r,c) in even or (r,c) in odd:
+    #             continue
+    #         if i%2 == 0:
+    #             even.add((r,c))
+    #             g[r][c] = 'O'
+    #         else:
+    #             odd.add((r,c))
+    #         for dr,dc in dirs:
+    #             if gok(g,r+dr,c+dc) and g[r+dr][c+dc] != '#':
+    #                 next.add((r+dr,c+dc))
+    #     curr = next
+    #     i += 1
+    # for row in g: print(''.join(row))
+    return
     for r in range(R):
         for c in range(C):
             if g[r][c] == 'S':
@@ -50,6 +70,28 @@ def part1(lines):
 
 # !! this is a hard problem for both time and space
 
+
+# !! made lots of progress (I think), but it's still slow and something is a little off...
+# !! nvm fixed that bug
+
+def dfs(done,even,odd):
+    s = [(0,0)]
+    tot = 0
+    seen = set()
+    while s:
+        r,c = s.pop()
+        if (r,c) in seen:
+            continue
+        seen.add((r,c))
+        if (r+c)%2 == 0: # verified manually with data
+            tot += even
+        else:
+            tot += odd
+        for dr,dc in dirs:
+            if (r+dr,c+dc) not in done:
+                s.append((r+dr,c+dc))
+    return tot
+
 def part2(lines):
     # return
     g,R,C = grid(lines,to_int=False)
@@ -58,62 +100,46 @@ def part2(lines):
             if g[r][c] == 'S':
                 start = (r,c)
     r,c = start
-    # print(len(even))
-    # print(len(odd))
-    curr = [(0,0,r,c)] # grid id (since infinite)
-    seen = set() # !! optimize this, currently O(n^4)?
-    for i in range(5000+1):
-        prev = set()
+    curr = set([(0,0,r,c)]) # grid id (since infinite)
+    prev1 = set() # edges 1 ago
+    prev2 = set() # edges 2 ago
+    for i in range(5000+1): # !! this part is still slow... least it's not a memory hog, it's like O(n)? space, but still O(n^2)? time
+        if i%10000 == 0:
+            print(i)
         edges = set() # find edges
-        next = []
+        next = set()
         for ri,ci,r,c in curr:
-            if (ri,ci,r,c) in seen:
-                continue
-            seen.add((ri,ci,r,c))
             edges.add((ri,ci,r,c))
             for dr,dc in dirs:
-                if g[(r+dr)%R][(c+dc)%C] != '#': # not rock
-                    next.append(((r+dr)//R,(c+dc)//C,r+dr,c+dc))
+                if ((r+dr)//R,(c+dc)//C,r+dr,c+dc) not in prev1 and g[(r+dr)%R][(c+dc)%C] != '#': # ignore inner edge, not rock
+                    next.add(((r+dr)//R,(c+dc)//C,r+dr,c+dc))
+        prev2 = prev1
+        prev1 = edges
         curr = next
     print("done")
-    curr = [(0,0)] # even parity
-    even = set()
-    odd = set()
-    i = 0
-    while curr: # fill every other, in layers
-        next = []
-        for r,c in curr:
-            if (r,c) in even or (r,c) in odd:
-                continue
-            if i%2 == 0:
-                even.add((r,c))
-            else:
-                odd.add((r,c))
-            for dr,dc in dirs:
-                if gok(g,r+dr,c+dc) and g[r+dr][c+dc] != '#':
-                    next.append((r+dr,c+dc))
-        curr = next
-        i += 1
-    curr = list(edges)
+    # even,odd = 7712,7675
+    even,odd = 42,39
+    curr = edges
     tot = 0
     seen1 = set() # good
     seen2 = set() # every other
     i = 0
-    gs = set() # initial seen grids
+    start_gs = set() # initial seen grids
     for ri,ci,_,_ in edges:
-        gs.add((ri,ci))
+        start_gs.add((ri,ci))
     done = set()
     while curr: # fill every other, in layers
-        next = []
+        next = set()
         for ri,ci,r,c in curr:
             if (ri,ci,r,c) in seen1 or (ri,ci,r,c) in seen2:
                 continue
-            if (ri,ci) not in gs and (ri,ci) not in done:
-                if (r,c) in even: # even parity
-                    tot += len(even)
-                else: # odd parity
-                    tot += len(even)
-                done.add((ri,ci))
+            if (ri,ci) not in start_gs:
+                if (ri,ci) not in done:
+                    if (ri+ci)%2 == 0:
+                        tot += even
+                    else: # odd parity
+                        tot += odd
+                    done.add((ri,ci))
             else:
                 if i%2 == 0:
                     seen1.add((ri,ci,r,c))
@@ -121,11 +147,14 @@ def part2(lines):
                 else:
                     seen2.add((ri,ci,r,c))
                 for dr,dc in dirs:
-                    if ((r+dr)//R,(c+dc)//C,r+dr,c+dc) in seen:
-                        next.append(((r+dr)//R,(c+dc)//C,r+dr,c+dc))
+                    if ((r+dr)//R,(c+dc)//C,r+dr,c+dc) not in edges and g[(r+dr)%R][(c+dc)%C] != '#': # keep within edges
+                        next.add(((r+dr)//R,(c+dc)//C,r+dr,c+dc))
+        if i == 0:
+            next = prev2 # inner edge
         curr = next
         i += 1
-    return len(seen1)
+    tot += dfs(done,even,odd) # fill interior interior
+    return tot
 
 # def part2(lines):
 #     # return
