@@ -23,7 +23,7 @@ def part1(lines):
         if curr == 'broadcaster': # button
             start = next
         else:
-            m[curr[1:]] = (curr[0],False,next) # (symbol,value,next)
+            m[curr[1:]] = (curr[0],False,next) # (symbol,state,next)
             if curr[0] == '&':
                 ands[curr[1:]] = {}
             for mod in next: # manually put &s first in input so this computes
@@ -39,11 +39,11 @@ def part1(lines):
             else:
                 lows += 1
             if curr in m:
-                symb,val,next = m[curr]
+                symb,state,next = m[curr]
                 if symb == '%' and not pulse: # L
-                    m[curr] = (symb,not val,next) # change value (state)
+                    m[curr] = (symb,not state,next) # flip state
                     for mod in next:
-                        q.append((not val,mod,curr))
+                        q.append((not state,mod,curr))
                 elif symb == '&':
                     ands[curr][prev] = pulse
                     if all(ands[curr].values()): # if all H
@@ -68,7 +68,7 @@ def part2(lines):
         if curr == 'broadcaster':
             start = next
         else:
-            m[curr[1:]] = (curr[0],False,next) # (symbol,value,next)
+            m[curr[1:]] = (curr[0],False,next) # (symbol,state,next)
             if curr[0] == '&':
                 ands[curr[1:]] = {}
             for mod in next: # manually put &s first in input so this computes
@@ -85,11 +85,11 @@ def part2(lines):
             else:
                 lows += 1
             if curr in m:
-                symb,val,next = m[curr]
+                symb,state,next = m[curr]
                 if symb == '%' and not pulse: # L
-                    m[curr] = (symb,not val,next) # change value (state)
+                    m[curr] = (symb,not state,next) # flip state
                     for mod in next:
-                        q.append((not val,mod,curr))
+                        q.append((not state,mod,curr))
                 elif symb == '&':
                     ands[curr][prev] = pulse
                     if all(ands[curr].values()): # if all H
