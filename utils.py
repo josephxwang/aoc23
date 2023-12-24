@@ -3,7 +3,7 @@ from copy import deepcopy
 from functools import cache,reduce # @cache decorator
 from heapq import heapify,heappop,heappush # min heap (priority queue)
 from os import path
-# from tqdm import tqdm
+from tqdm import tqdm
 import math # eg. math.gcd(x, y)
 # import pyperclip
 import re
