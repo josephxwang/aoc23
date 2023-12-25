@@ -4,20 +4,44 @@ from utils import *
 # constants: dirs, adjs, alphabet (lowercase), digits, punctuation
 # functions: reverse, gok, gflip, grotcw, grotccw, dfs, bfs, dijkstra
 
+# !! I got rank 95/83 lol!!
+# plotted the graph with networkx hahahaha
+
+
+def dfs(graph,start):
+    count = 0
+    s = [start]
+    seen = set()
+    while s:
+        curr = s.pop()
+        if curr in seen:
+            continue
+        seen.add(curr)
+        count += 1
+        for nbr in graph[curr]:
+            s.append(nbr)
+    return count
 
 def part1(lines):
-    # lines = ints(lines)
-    # lines = words(lines)
-    # g,R,C = grid(lines,to_int=False)
-    
-    tot = 0
-    # prod = 1
-    for i,l in enumerate(lines):
-    # for l in lines:
-        
-    return tot
+    lines = words(lines) 
+    m = defaultdict(set)
+    for l in lines:
+        curr = l[0]
+        for next in l[1:]:
+            m[curr].add(next)
+            m[next].add(curr)
+    # fqn/dgc
+    # htp/vps
+    # ttj/rpd
+    m['fqn'].remove('dgc')
+    m['dgc'].remove('fqn')
+    m['htp'].remove('vps')
+    m['vps'].remove('htp')
+    m['ttj'].remove('rpd')
+    m['rpd'].remove('ttj')
+    return dfs(m,'fqn')*dfs(m,'dgc')
 
-def part2(lines):
+def part2(lines): # !! no part 2!!!
     return
 
 
