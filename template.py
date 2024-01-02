@@ -1,8 +1,9 @@
 from utils import * 
-# Counter, defaultdict, deque, heapify/pop/push (min heap)
+# Counter, defaultdict, deque, heapify/pop/push (min heap), Node
 # deepcopy, cache (@cache), reduce, math
-# constants: dirs, adjs, alphabet (lowercase), digits, punctuation
-# functions: reverse, gok, gflip, grotcw, grotccw, dfs, bfs, dijkstra
+# constants: dirs, adjs, alphabet, ALPHABET, digits, punctuation
+# functions: isprime, factors, pfactors, gok, grotcw, grotccw, shoelace, picks, intersect
+# graph functions: dfs, bfs, dijkstra (both for representation as adjacency list and grid)
 
 
 def part1(lines):
