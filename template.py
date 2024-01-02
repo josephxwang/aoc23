@@ -1,24 +1,24 @@
 from utils import * 
-# Counter, defaultdict, deque, heapify/pop/push (min heap), Node
-# deepcopy, cache (@cache), reduce, math
+# Counter, defaultdict, deque, heap(ify|pop|push), Node
+# deepcopy, cache, reduce, math
 # constants: dirs, adjs, alphabet, ALPHABET, digits, punctuation
-# functions: isprime, factors, pfactors, gok, grotcw, grotccw, shoelace, picks, intersect
-# graph functions: dfs, bfs, dijkstra (both for representation as adjacency list and grid)
+# functions: isprime, (p)factors, gok, grot(cw|ccw), shoelace, picks, intersect, overlap(1d|2d|3d)
+# graph functions: (g)dfs, (g)bfs, (g)dijkstra
 
 
-def part1(lines):
-    # lines = ints(lines)
-    # lines = words(lines)
-    # g,R,C = grid(lines,to_int=False)
+def part1(ls):
+    # ls = ints(ls)
+    # ls = words(ls)
+    # g,R,C = grid(ls,to_int=False)
     
     tot = 0
     # prod = 1
-    for i,l in enumerate(lines):
-    # for l in lines:
+    for i,l in enumerate(ls):
+    # for l in ls:
         
     return tot
 
-def part2(lines):
+def part2(ls):
     return
 
 

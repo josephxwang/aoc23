@@ -12,8 +12,9 @@ import sys # eg. sys.setrecursionlimit(3000)
 
 
 # !! add topological sort
+# !! rewrite dijkstra
 
-# normal is for graph representation (adjacency list), 2 is for grid
+# normal is for graph representation (adjacency list), g is for grid
 
 def dfs(graph,start):
     s = [start]
@@ -29,7 +30,7 @@ def dfs(graph,start):
         for nbr in graph[curr]:
             s.append(nbr)
             
-def dfs2(g,r,c):
+def gdfs(g,r,c):
     s = [(r,c)]
     seen = set()
     while s:
@@ -60,7 +61,7 @@ def bfs(graph,start):
         for nbr in graph[curr]:
             q.append(nbr)
 
-def bfs2(g,r,c):
+def gbfs(g,r,c):
     q = deque([(r,c)])
     seen = set()
     while q:
@@ -94,7 +95,7 @@ def dijkstra(graph,start): # classic
     return dists,parents
 
 # dijkstra more simply, for a grid
-def dijkstra2(g):
+def gdijkstra(g):
     R = len(g)
     C = len(g[0])
     q = [(0,0,0)] # (dist,r,c), start at top left, no cost to get there
@@ -198,6 +199,37 @@ def intersect(line1: tuple[tuple[int]], line2: tuple[tuple[int]]): # each line a
     y = ((x1*y2 - y1*x2)*(y3-y4) - (y1-y2)*(x3*y4 - y3*x4)) / denom
     return x,y
 
+def overlap1d(range1: tuple[int], range2: tuple[int]): # 1D
+    l = max(range1[0],range2[0])
+    r = min(range1[1],range2[1])
+    if l >= r:
+        return None
+    return l,r
+    
+def overlap2d(rect1: tuple[tuple[int]], rect2: tuple[tuple[int]]): # each rect as tuple of 2 points
+    (r1x1,r1y1),(r1x2,r1y2) = rect1
+    (r2x1,r2y1),(r2x2,r2y2) = rect2
+    x1 = max(r1x1,r2x1)
+    y1 = max(r1y1,r2y1)
+    x2 = min(r1x2,r2x2)
+    y2 = min(r1y2,r2y2)
+    if x1 >= x2 or y1 >= y2:
+        return None
+    return (x1,y1),(x2,y2)
+
+def overlap3d(cube1: tuple[tuple[int]], cube2: tuple[tuple[int]]): # each cube as tuple of 2 3D points
+    (c1x1,c1y1,c1z1),(c1x2,c1y2,c1z2) = cube1
+    (c2x1,c2y1,c2z1),(c2x2,c2y2,c2z2) = cube2
+    x1 = max(c1x1,c2x1)
+    y1 = max(c1y1,c2y1)
+    z1 = max(c1z1,c2z1)
+    x2 = min(c1x2,c2x2)
+    y2 = min(c1y2,c2y2)
+    z2 = min(c1z2,c2z2)
+    if x1 >= x2 or y1 >= y2 or z1 >= z2:
+        return None
+    return (x1,y1,z1),(x2,y2,z2)
+
 # get integers from lines
 def ints(lines):
     ints = []
@@ -219,3 +251,5 @@ def grid(lines,to_int=False):
             l = map(int,list(l))
         grid.append(list(l))
     return grid,len(grid),len(grid[0])
+
+# so many of these functions are written by sgpt lol
